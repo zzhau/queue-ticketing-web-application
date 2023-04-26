@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Customer View</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="general.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="horizontal_parent">
+        <div class="container">
+            <label id="now-serving-label">Now Serving: </label>
+            <label id="last-number-label">Last Number: </label>
+            <button id="generate-number">Take a Number</button>
+            <button id="check-queue">Check queue</button>
+            <script src="customer.js"></script> 
+        </div>
+    </div>
+
+    <div class="horizontal_parent">
+        <div class="container">
+            <span class="dot"></span>
+            <label>Counter 1</label>
+            <span th:text="${currentNumber}"></span>
+        </div>
+
+        <div class="container">
+            <span class="dot"></span>
+            <label>Counter 2</label>
+            <span th:text="${currentNumber}"></span>
+        </div>
+
+        <div class="container">
+            <span class="dot"></span>
+            <label>Counter 3</label>
+            <span th:text="${currentNumber}"></span>
+        </div>
+
+        <div class="container">
+            <span class="dot"></span>
+            <label>Counter 4</label>
+            <span th:text="${currentNumber}"></span>
+        </div>
+    </div>
+</body>
+</html>
