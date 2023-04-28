@@ -4,12 +4,17 @@ label, span, button{
     font-size: 40px;
 }
 
+button {
+    margin: 10px 10px;
+}
+
 .dot {
     height: 25px;
     width: 25px;
     background-color: #bbb;
     border-radius: 50%;
     align-self: flex-end;
+    border: 1px solid #000;
 }
 
 .container {
@@ -28,4 +33,12 @@ label, span, button{
     justify-content: center;
     align-items: center;
     height: 400px;
+}
+
+.horizontal_parent_full_height {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }

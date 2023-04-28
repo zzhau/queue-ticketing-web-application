@@ -12,34 +12,34 @@
             <label id="last-number-label">Last Number: </label>
             <button id="generate-number">Take a Number</button>
             <button id="check-queue">Check queue</button>
-            <script src="customer.js"></script> 
         </div>
     </div>
 
     <div class="horizontal_parent">
         <div class="container">
-            <span class="dot"></span>
+            <span class="dot" id="c1dot"></span>
             <label>Counter 1</label>
-            <span th:text="${currentNumber}"></span>
+            <label id="c1-num"></label>
         </div>
 
         <div class="container">
-            <span class="dot"></span>
+            <span class="dot" id="c2dot"></span>
             <label>Counter 2</label>
-            <span th:text="${currentNumber}"></span>
+            <label id="c2-num"></label>
         </div>
 
         <div class="container">
-            <span class="dot"></span>
+            <span class="dot" id="c3dot"></span>
             <label>Counter 3</label>
-            <span th:text="${currentNumber}"></span>
+            <label id="c3-num"></label>
         </div>
 
         <div class="container">
-            <span class="dot"></span>
+            <span class="dot" id="c4dot"></span>
             <label>Counter 4</label>
-            <span th:text="${currentNumber}"></span>
+            <label id="c4-num"></label>
         </div>
     </div>
+    <script src="customer.js"></script> 
 </body>
 </html>

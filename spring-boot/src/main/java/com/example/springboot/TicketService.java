@@ -2,6 +2,7 @@ package com.example.springboot;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -9,12 +10,14 @@ import java.util.Queue;
 public class TicketService {
     private int number;
     private LinkedList<Integer> queue;
+    private ArrayList<Integer> completedTickets;
 
     public TicketService() {
         number = 1;
         queue = new LinkedList<>();
     }
 
+    // Generate the ticket number incremeneting by 1 each time starting from 0 
     public int generateNumber() {
         int temp = number;
         queue.add(temp);
@@ -44,5 +47,26 @@ public class TicketService {
         else {
             return -999;
         }
+    }
+
+    // Returns the first element of the queue if only it is not empty
+    public int removeQueueHead() {
+        if (!queue.isEmpty()) {
+            return queue.poll().intValue();
+        }
+        else {
+            return -999;
+        }
+    }
+
+    // Returns a boolean indicating whether the queue is empty
+    public boolean isQueueEmpty() {
+        return queue.isEmpty();
+    }
+
+    
+    // Add the completed ticket number into the completed tickets list
+    public void completeTicket(int ticketNumber) {
+        completedTickets.add(ticketNumber);
     }
 }
