@@ -86,12 +86,12 @@ function statusChange(counter) {
                         statusButton4.textContent = "Go Offline";
                     }
                     break;
-            };
+            }
         })
         .catch(function(error) {
             console.error(error);
-        });
-};
+        })
+}
 
 // This function checks if the queue is empty and displays a message if it is, otherwise it checks the status of the specified counter. 
 // If the counter is online, it sends a message to the customer.js file to update the current ticket number on the customer page.
@@ -145,13 +145,13 @@ function callNextNumber(counter) {
                     })
                     .catch(function(error) {
                         console.error(error);
-                    });
+                    })
             }
         })
         .catch(function(error) {
             console.error(error);
-        });
-};
+        })
+}
 
 // This function checks the status of the specified counter and 
 // only sends a message to customer.js to complete the current number if the counter is online
@@ -167,5 +167,50 @@ function completeCurrent(counter) {
         })
         .catch(function(error) {
             console.error(error);
-        });
-};
+        })
+}
+
+// The function to update the "Go Offline" or "Go Online" status button on page load for the counter page
+function pageLoadCounterStatus(counter) {
+    console.log("got here");
+    fetch(`/counter-status?counterName=${counter}`, { method: "GET" })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(status) {
+            // If the counter is online then display "Go Offline"
+            if (status) {
+                switch(counter) {
+                    case "counter1":
+                        statusButton1.textContent = "Go Offline";
+                        break;
+                    case "counter2":
+                        statusButton2.textContent = "Go Offline";
+                        break;
+                    case "counter3":
+                        statusButton3.textContent = "Go Offline";
+                        break;
+                    case "counter4":
+                        statusButton4.textContent = "Go Offline";
+                        break;
+                }
+            }
+            // else the counter is offline then display "Go Online"
+            else {
+                switch(counter) {
+                    case "counter1":
+                        statusButton1.textContent = "Go Online";
+                        break;
+                    case "counter2":
+                        statusButton2.textContent = "Go Online";
+                        break;
+                    case "counter3":
+                        statusButton3.textContent = "Go Online";
+                        break;
+                    case "counter4":
+                        statusButton4.textContent = "Go Online";
+                        break;
+                }
+            }
+        })
+}

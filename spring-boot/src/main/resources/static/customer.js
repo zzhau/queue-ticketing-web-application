@@ -57,8 +57,8 @@ generateNumberBtn.addEventListener("click", function() {
         })
         .catch(function(error) {
             console.error(error);
-        });
-});
+        })
+})
 
 // Function to update the Now Serving label with the first element of the queue
 function updateNowServingLabel() {
@@ -78,8 +78,8 @@ function updateNowServingLabel() {
         })
         .catch(function(error) {
             console.error(error);
-    });
-};
+    })
+}
 
 // Function to update the Last Number label with the last element of the queue
 function updateLastNumberLabel() {
@@ -98,7 +98,7 @@ function updateLastNumberLabel() {
             console.error(error);
         })
 
-};
+}
 
 // Function to update the customer page Counter currently serving number
 function updateCurrentNum(counterName) {
@@ -123,8 +123,8 @@ function updateCurrentNum(counterName) {
             }
             updateCounterStatus(counterName);
             updateNowServingLabel();
-        });
-};
+        })
+}
 
 // Function to update the counter based on the current status
 function updateCounterStatus(counterName) {
@@ -221,7 +221,7 @@ function updateCounterStatus(counterName) {
         .catch(function(error) {
             console.error(error);
         })
-};
+}
 
 // Function to update the counter status on page load
 function updatePageStatus() {
@@ -229,7 +229,7 @@ function updatePageStatus() {
     updateCounterStatus("counter2");
     updateCounterStatus("counter3");
     updateCounterStatus("counter4");
-};
+}
 
 // Update the current number if the counter is online and not already serving a customer
 callNextChannel.addEventListener("message", (event) => {
@@ -256,7 +256,7 @@ callNextChannel.addEventListener("message", (event) => {
             }
             break;
     }
-});
+})
 
 // Complete the current ticket and update the customer page
 completeCurChannel.addEventListener("message", (event) => {
@@ -287,14 +287,14 @@ completeCurChannel.addEventListener("message", (event) => {
             break;
         default: 
             updateCounterStatus(event.data);;
-    };
+    }
     updateCounterStatus(event.data);
-});
+})
 
 // Update the counter status when the going offline or online button is clicked
 statusChannel.addEventListener("message", (event) => {
     updateCounterStatus(event.data);
-});
+})
 
 
 
