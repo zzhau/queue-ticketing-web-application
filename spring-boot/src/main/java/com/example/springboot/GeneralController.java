@@ -19,51 +19,87 @@ public class GeneralController {
 	private CounterService c3 = new CounterService();
 	private CounterService c4 = new CounterService();
 
+	/**
+	 * This method maps to a GET request and used to display the counter page.
+	 * 
+	 * @return string "counter"
+	*/
 	@GetMapping("/counter")
 	public String counter() {
-		return "counter";   // we need to return the html name to access it
+		return "counter";   
 	}
 
+	/**
+	 * This method maps to a GET request and used to display the customer page.
+	 * 
+	 * @return string "customer"
+	 */
     @GetMapping("/customer")
 	public String customer() {
-		return "customer";   // we need to return the html name to access it
+		return "customer";   
 	}
 
-	// Generate the ticket number incremeneting by 1 each time starting from 0 
+	/**
+	 * This method maps to a POST request and generate a new ticket number.
+	 * 
+	 * @return integer that represents the newly generated ticket number
+	 */
 	@PostMapping("/generate-number")
 	@ResponseBody
 	public int generateNumber() {
 		return ticketService.generateNumber();	
 	}
 
-	@PostMapping("/check-queue")
-	@ResponseBody
-	public Queue<Integer> checkQueue() {
-		return ticketService.checkQueue();
-	}
+	/**
+	 * This method maps to a POST request and get the current queue.
+	 * 
+	 * @return Queue of integers that represents the current queue of ticket numbers.
+	 */
+	// @PostMapping("/check-queue")
+	// @ResponseBody
+	// public Queue<Integer> checkQueue() {
+	// 	return ticketService.checkQueue();
+	// }
 
-	// Returns the head of the queue if only it is not empty but does not remove it
+	/**
+	 * This method maps to a GET request and get the "Now Serving" number.
+	 * 
+	 * @return integer that represent the ticket number currently being served
+	 */
 	@GetMapping("/now-serving")
 	@ResponseBody
 	public int checkQueueHead() {
 		return ticketService.checkQueueHead();
 	}
 
-	// Returns the last element of the queue if only it is not empty but does not remove it
+	/**
+	 * This method maps to a GET request and get the last number in the queue.
+	 * 
+	 * @return integer that represents the last ticket number in the queue.
+	 */
 	@GetMapping("/last-number")
 	@ResponseBody
 	public int checkQueueLast() {
 		return ticketService.checkQueueLast();
 	}
 
-	// Returns and remove the first element of the queue
+	/**
+	 * This method maps to a GET request and returns an integer that represents the ticket number.
+	 * 
+	 * @return integer that represents the ticket number from the head of the queue
+	 */
 	@GetMapping("/remove-serving")
 	@ResponseBody
 	public int removeQueueHead() {
 		return ticketService.removeQueueHead();
 	}
 
-	// Get the status of the counter if it is Online then it will return True and False otherwise
+	/**
+	 * This method maps to a GET and check the status of the specified counter
+	 * 
+	 * @param counterName string representation of the name of the counter
+	 * @return ResponseEntity with a boolean value that represents the status of a specific counter (online or offline).
+	 */
 	@GetMapping("/counter-status")
 	public ResponseEntity<Boolean> checkStatus(@RequestParam String counterName) {
 		switch(counterName) {
@@ -80,6 +116,11 @@ public class GeneralController {
 		}
 	}
 
+	/**
+	 * This method maps to a POST request and updates the status of a specific counter (online or offline).
+	 * 
+	 * @param counterName string representation of the name of the counter
+	 */
 	@PostMapping("/change-status")
 	@ResponseBody
 	public void changeStatus(@RequestParam String counterName) {
@@ -101,12 +142,22 @@ public class GeneralController {
 		}
 	}
 
+	/**
+	 * This method maps to a GET request and check whether the queue is empty
+	 * 
+	 * @return boolean that indicates whether the queue is empty.
+	 */
 	@GetMapping("/check-empty")
 	@ResponseBody
 	public boolean isEmpty() {
 		return ticketService.isQueueEmpty();
 	}
 
+	/**
+	 * This method maps to a POST request and marks the specified ticket number as complete.
+	 * 
+	 * @param ticketNumber integer representing the ticket number to be completed
+	 */
 	@PostMapping("/complete-ticket")
 	@ResponseBody
 	public void completeTicket(@RequestParam int ticketNumber) {

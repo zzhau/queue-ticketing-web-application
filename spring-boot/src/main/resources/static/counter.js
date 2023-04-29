@@ -1,5 +1,7 @@
-const channel = new BroadcastChannel('app-data');
-const channel2 = new BroadcastChannel('channel2');
+// Create BroadcastChannels to communicate with the server
+const callNextChannel = new BroadcastChannel('next-num');
+const completeCurChannel = new BroadcastChannel('complete-cur');
+const statusChannel = new BroadcastChannel('status');
 
 // Get references to the status buttons
 const statusButton1 = document.getElementById("status1");
@@ -7,7 +9,7 @@ const statusButton2 = document.getElementById("status2");
 const statusButton3 = document.getElementById("status3");
 const statusButton4 = document.getElementById("status4");
 
-// Each Call Next button will call the statusChange function while indicating which counter they are from
+// Add event listeners to each status button to call statusChange function and pass the counter name as a parameter
 statusButton1.addEventListener("click", function() {statusChange("counter1")});
 statusButton2.addEventListener("click", function() {statusChange("counter2")});
 statusButton3.addEventListener("click", function() {statusChange("counter3")});
@@ -25,7 +27,7 @@ const c2 = callNextButton2.parentNode;
 const c3 = callNextButton3.parentNode;
 const c4 = callNextButton4.parentNode;
 
-// Each Call Next button will call the callNextNumber function while indicating which counter they are from
+// Add event listeners to each callNext button to call callNextNumber function and pass the counter name as a parameter
 callNextButton1.addEventListener("click", function() {callNextNumber("counter1")});
 callNextButton2.addEventListener("click", function() {callNextNumber("counter2")});
 callNextButton3.addEventListener("click", function() {callNextNumber("counter3")});
@@ -37,64 +39,69 @@ const completeButton2 = document.getElementById("complete2");
 const completeButton3 = document.getElementById("complete3");
 const completeButton4 = document.getElementById("complete4");
 
-// Give each of those button to call the completeCurrent function on click 
+// Add event listeners to each complete button to call completeCurrent function and pass the counter name as a parameter
 completeButton1.addEventListener("click", function() {completeCurrent("counter1")});
 completeButton2.addEventListener("click", function() {completeCurrent("counter2")});
 completeButton3.addEventListener("click", function() {completeCurrent("counter3")});
 completeButton4.addEventListener("click", function() {completeCurrent("counter4")});
 
 
-// Change the status button from Go Offline to Go Online and vice versa 
+// This function changes the status of the specified counter and updates the status button text accordingly
 function statusChange(counter) {
-    switch(counter) {
-        case "counter1":
-            fetch(`/change-status?counterName=counter1`, { method: "POST" })
-            if ((statusButton1.textContent) === "Go Offline") {
-                statusButton1.textContent = "Go Online";
-            }
-            else {
-                statusButton1.textContent = "Go Offline";
-            }
-            break;
-        case "counter2":
-            fetch(`/change-status?counterName=counter2`, { method: "POST" })
-            if ((statusButton2.textContent) === "Go Offline") {
-                statusButton2.textContent = "Go Online";
-            }
-            else {
-                statusButton2.textContent = "Go Offline";
-            }
-            break;
-        case "counter3":
-            fetch(`/change-status?counterName=counter3`, { method: "POST" })
-            if ((statusButton3.textContent) === "Go Offline") {
-                statusButton3.textContent = "Go Online";
-            }
-            else {
-                statusButton3.textContent = "Go Offline";
-            }
-            break;
-        case "counter4":
-            fetch(`/change-status?counterName=counter4`, { method: "POST" })
-            if ((statusButton4.textContent) === "Go Offline") {
-                statusButton4.textContent = "Go Online";
-            }
-            else {
-                statusButton4.textContent = "Go Offline";
-            }
-            break;
-    }
+    fetch(`/change-status?counterName=${counter}`, { method: "POST"})
+        .then(function() {
+            // Send the counter name through the status channel to update the status on the customer page
+            statusChannel.postMessage(counter);
+            // Switch the button text according to the new status
+            switch(counter) {
+                case "counter1":
+                    if ((statusButton1.textContent) === "Go Offline") {
+                        statusButton1.textContent = "Go Online";
+                    }
+                    else {
+                        statusButton1.textContent = "Go Offline";
+                    }
+                    break;
+                case "counter2":
+                    if ((statusButton2.textContent) === "Go Offline") {
+                        statusButton2.textContent = "Go Online";
+                    }
+                    else {
+                        statusButton2.textContent = "Go Offline";
+                    }
+                    break;
+                case "counter3":
+                    if ((statusButton3.textContent) === "Go Offline") {
+                        statusButton3.textContent = "Go Online";
+                    }
+                    else {
+                        statusButton3.textContent = "Go Offline";
+                    }
+                    break;
+                case "counter4":
+                    if ((statusButton4.textContent) === "Go Offline") {
+                        statusButton4.textContent = "Go Online";
+                    }
+                    else {
+                        statusButton4.textContent = "Go Offline";
+                    }
+                    break;
+            };
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
 };
 
-// Check the status of the specific counter and call the function to update the counter current number 
-// on the custommer page. If the current queue is empty, it will display a message instead specifying there 
-// are no tickest in the queue.
+// This function checks if the queue is empty and displays a message if it is, otherwise it checks the status of the specified counter. 
+// If the counter is online, it sends a message to the customer.js file to update the current ticket number on the customer page.
 function callNextNumber(counter) {
     fetch("/check-empty", { method: "GET" })
         .then(function(response) {
             return response.json();
         })
         .then(function(empty) {
+            // If the queue is empty, display the message
             if (empty) {
                 const emptyMessageDiv = document.createElement("div");
                 emptyMessageDiv.textContent = "No tickets in the waiting queue";
@@ -126,13 +133,14 @@ function callNextNumber(counter) {
                 }
             }
             else {
+                // If the counter is online, send a message to customer.js to update the current ticket number
                 fetch(`/counter-status?counterName=${counter}`, { method: "GET" })
                     .then(function(response) {
                         return response.json();
                     })
                     .then(function(status) {
                         if (status) {
-                            channel.postMessage(counter);
+                            callNextChannel.postMessage(counter);
                         }
                     })
                     .catch(function(error) {
@@ -145,7 +153,8 @@ function callNextNumber(counter) {
         });
 };
 
-// 
+// This function checks the status of the specified counter and 
+// only sends a message to customer.js to complete the current number if the counter is online
 function completeCurrent(counter) {
     fetch(`/counter-status?counterName=${counter}`, { method: "GET" })
         .then(function(response) {
@@ -153,8 +162,7 @@ function completeCurrent(counter) {
         })
         .then(function(status) {
             if (status) {
-                console.log("hi");
-                channel2.postMessage(counter);
+                completeCurChannel.postMessage(counter);
             }
         })
         .catch(function(error) {
