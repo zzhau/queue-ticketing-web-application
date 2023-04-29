@@ -1,9 +1,6 @@
 // Get the generate number button 
 const generateNumberBtn = document.getElementById("generate-number");
 
-//Get the check queue button
-const checkQueueBtn = document.getElementById("check-queue");
-
 // Get the "Now Serving: " <label> element from customer.html
 const nowServingLabel = document.getElementById("now-serving-label");
 
@@ -62,30 +59,6 @@ generateNumberBtn.addEventListener("click", function() {
             console.error(error);
         });
 });
-
-// Send an HTTP Post request to the backend and then display the current queue
-// checkQueueBtn.addEventListener("click", function() {
-//     fetch("/check-queue", { method: "POST" })
-//         .then(function(response) {
-//             return response.json();
-//         })
-//         .then(function(queue) {
-//             // Display the generated number to the user
-//             const numberDiv = document.createElement("div");
-//             numberDiv.textContent = "Queue is " + queue;
-
-//             const firstDiv = document.querySelector(".container");
-//             firstDiv.appendChild(numberDiv);
-
-//             // Hide the number after 5 seconds
-//             setTimeout(function() {
-//                 numberDiv.style.display = "none";
-//             }, 3000);
-//         })
-//         .catch(function(error) {
-//             console.error(error);
-//         });
-// });
 
 // Function to update the Now Serving label with the first element of the queue
 function updateNowServingLabel() {

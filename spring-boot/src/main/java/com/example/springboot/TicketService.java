@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
 
 @Service
 public class TicketService {
@@ -32,15 +31,6 @@ public class TicketService {
         number++;
 		return temp;
     }
-
-    /**
-     * Returns the current state of the queue.
-     * 
-     * @return the queue of ticket numbers
-     */
-    // public Queue<Integer> checkQueue() {
-    //     return queue;
-    // }
 
     /**
      * Returns the head of the queue if it is not empty.

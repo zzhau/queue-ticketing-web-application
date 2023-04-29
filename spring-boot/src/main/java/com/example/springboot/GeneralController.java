@@ -1,7 +1,5 @@
 package com.example.springboot;
 
-import java.util.Queue;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -49,17 +47,6 @@ public class GeneralController {
 	public int generateNumber() {
 		return ticketService.generateNumber();	
 	}
-
-	/**
-	 * This method maps to a POST request and get the current queue.
-	 * 
-	 * @return Queue of integers that represents the current queue of ticket numbers.
-	 */
-	// @PostMapping("/check-queue")
-	// @ResponseBody
-	// public Queue<Integer> checkQueue() {
-	// 	return ticketService.checkQueue();
-	// }
 
 	/**
 	 * This method maps to a GET request and get the "Now Serving" number.
