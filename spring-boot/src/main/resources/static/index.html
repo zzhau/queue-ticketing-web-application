@@ -4,10 +4,40 @@
     <meta charset="UTF-8">
     <title>Choose view</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Start Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 50px;
+        }
+
+        a {
+            display: block;
+            margin: 20px;
+            font-size: 18px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <button> Customer View </button>
-    <button> Counter Management </button>
+    <h1>Welcome, this is a queue ticketing web application.</h1>
+    <p>To see how it works, please open both the customer and counter page in new tabs.</p>
+    <a href="/customer" target="_blank">Open customer page in new tab</a>
+    <a href="/counter" target="_blank">Open counter page in new tab</a>
 </body>
 </html>
