@@ -1,4 +1,4 @@
-The website is a ticketing website where customers can take ticket number. There is also a counter page to manage the current counter status with functions such as calling the next number, completing the current number and going offline.
+The website is a ticketing website where customers can take ticket number. There is also a counter page to manage the current counter status with functions such as calling the next number, completing the current number and going offline. You can access the website at https://queue-ticketing-webapp.ey.r.appspot.com/
 
 
 ![Counter Page](https://github.com/zzhau/quickdesk/blob/main/img/counter_page.png?raw=true)
